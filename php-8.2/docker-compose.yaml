@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  web:
+    image: my-php-golden-image
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
