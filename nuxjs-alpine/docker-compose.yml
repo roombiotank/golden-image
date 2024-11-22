@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  nuxt-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+    networks:
+      - nuxt-network
+    depends_on:
+      - node_modules
+
+  node_modules:
+    image: node:18-alpine
+    command: ["sh", "-c", "while true; do sleep 1000; done"]
+    volumes:
+      - ./node_modules:/node_modules
+    networks:
+      - nuxt-network
+
+networks:
+  nuxt-network:
+    driver: bridge
