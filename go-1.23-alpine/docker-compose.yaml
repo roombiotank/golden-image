@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: myapp-container
+    environment:
+      - APP_ENV=production
+    ports:
+      - "8080:8080"  # Adjust the port if your app uses a different one
+    restart: unless-stopped
