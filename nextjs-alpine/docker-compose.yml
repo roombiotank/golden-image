@@ -1,24 +1,19 @@
 version: '3.8'
 
 services:
-  myapp:
+  nextjs-app:
     build:
-      context: .
-      dockerfile: Dockerfile   # Menggunakan Dockerfile yang ada di direktori ini
-    container_name: myapp-container
-    environment:
-      - APP_ENV=production     # Menetapkan environment untuk produksi
-      - DB_HOST=db             # Contoh variabel lingkungan lainnya, sesuaikan dengan kebutuhan
-      - DB_PORT=5432           # Sesuaikan dengan port DB Anda
+      context: .  # Path to the directory containing the Dockerfile
+      dockerfile: Dockerfile  # Optional if the file is named 'Dockerfile'
     ports:
-      - "8080:8080"            # Port mapping untuk aplikasi Anda
+      - "3000:3000"  # Map port 3000 on the host to port 3000 in the container
+    environment:
+      - NODE_ENV=production  # Set the environment variable for production
     volumes:
-      - ./app:/app             # Volume untuk menghubungkan direktori lokal ke kontainer, sesuaikan jika perlu
-    restart: unless-stopped    # Restart container jika berhenti kecuali dihentikan secara manual
+      - .:/app  # Mount the current directory into the container (useful for development)
     networks:
-      - myapp-network          # Tentukan jaringan jika diperlukan (misalnya, jika Anda ingin menggunakan DB atau layanan lain)
+      - nextjs_network
 
-# Definisikan jaringan jika diperlukan
 networks:
-  myapp-network:
+  nextjs_network:
     driver: bridge
