@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .  # Path ke direktori yang berisi Dockerfile ini
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Mapping port aplikasi dari container ke host
+    environment:
+      NODE_ENV: production  # Menentukan variabel lingkungan untuk produksi
+    volumes:
+      - .:/usr/src/app  # Memetakan volume untuk pengembangan lokal (opsional)
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
