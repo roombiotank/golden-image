@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile   # Menggunakan Dockerfile yang ada di direktori ini
+    container_name: myapp-container
+    environment:
+      - APP_ENV=production     # Menetapkan environment untuk produksi
+      - DB_HOST=db             # Contoh variabel lingkungan lainnya, sesuaikan dengan kebutuhan
+      - DB_PORT=5432           # Sesuaikan dengan port DB Anda
+    ports:
+      - "8080:8080"            # Port mapping untuk aplikasi Anda
+    volumes:
+      - ./app:/app             # Volume untuk menghubungkan direktori lokal ke kontainer, sesuaikan jika perlu
+    restart: unless-stopped    # Restart container jika berhenti kecuali dihentikan secara manual
+    networks:
+      - myapp-network          # Tentukan jaringan jika diperlukan (misalnya, jika Anda ingin menggunakan DB atau layanan lain)
+
+# Definisikan jaringan jika diperlukan
+networks:
+  myapp-network:
+    driver: bridge
